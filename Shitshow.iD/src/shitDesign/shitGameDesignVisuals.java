@@ -4,10 +4,15 @@ import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
 
 import shitDesign.display.display;
 import shitDesign.gfx.Assets;
+import shitDesign.gfx.ImagesLoading;
 
 public class shitGameDesignVisuals implements Runnable {
 
@@ -21,6 +26,7 @@ public class shitGameDesignVisuals implements Runnable {
 	private Thread thread;
 	private BufferStrategy bs;
 	private Graphics g;
+	private ImagesLoading a = new ImagesLoading();
 
 //object with parameters for our game window
 	public shitGameDesignVisuals(String title, int width, int height, String p) {
@@ -52,26 +58,28 @@ public class shitGameDesignVisuals implements Runnable {
 		// Clear Screen
 		g.clearRect(0, 0, width, height);
 		// DRAWING
+		g.drawImage(ImagesLoading.currentImageNameMethod(), ImagesLoading.imageStartingPoint()*2, 100, ImagesLoading.currentImageWidth()/2, ImagesLoading.currentImageHeight()/2, null);
 		for (int i = 0; i < Assets.currentLetterSize.size(); i++) {
+	
 			ArrayList<BufferedImage> currentList = Assets.sizeChange.get(String.valueOf(shitDesignGame.p.charAt(i)));
 			BufferedImage currentMem = currentList.get(Assets.currentLetterSelection.get(i));
 			if (Assets.sizeIncreaseArray.get(i) + Assets.currentLetterSize.get(i) < 1000) {
-				g.drawImage(currentMem, Assets.sizeIncreaseArray.get(i), 0, Assets.currentLetterSize.get(i),
+				g.drawImage(currentMem, Assets.sizeIncreaseArray.get(i), (ImagesLoading.currentImageWidth()/2)+100, Assets.currentLetterSize.get(i),
 						Assets.currentLetterSize.get(i), null);
 			} else if (Assets.sizeIncreaseArray.get(i) + Assets.currentLetterSize.get(i) < 2000) {
-				g.drawImage(currentMem, Assets.sizeIncreaseArray.get(i) - 1000, 200,
+				g.drawImage(currentMem, Assets.sizeIncreaseArray.get(i) - ((ImagesLoading.currentImageWidth()/2)+600), (ImagesLoading.currentImageWidth()/2)+300,
 						Assets.currentLetterSize.get(i), Assets.currentLetterSize.get(i), null);
 			} else if (Assets.sizeIncreaseArray.get(i) + Assets.currentLetterSize.get(i) < 3000) {
-				g.drawImage(currentMem, Assets.sizeIncreaseArray.get(i) - 2000, 400,
+				g.drawImage(currentMem, Assets.sizeIncreaseArray.get(i) - ((ImagesLoading.currentImageWidth()/2)+800), (ImagesLoading.currentImageWidth()/2)+500,
 						Assets.currentLetterSize.get(i), Assets.currentLetterSize.get(i), null);
 			} else if (Assets.sizeIncreaseArray.get(i) + Assets.currentLetterSize.get(i) < 4000) {
-				g.drawImage(currentMem, Assets.sizeIncreaseArray.get(i) - 3000, 600,
+				g.drawImage(currentMem, Assets.sizeIncreaseArray.get(i) - ((ImagesLoading.currentImageWidth()/2)+1000), (ImagesLoading.currentImageWidth()/2)+700,
 						Assets.currentLetterSize.get(i), Assets.currentLetterSize.get(i), null);
 			} else if (Assets.sizeIncreaseArray.get(i) + Assets.currentLetterSize.get(i) < 5000) {
-				g.drawImage(currentMem, Assets.sizeIncreaseArray.get(i) - 4000, 800,
+				g.drawImage(currentMem, Assets.sizeIncreaseArray.get(i) - ((ImagesLoading.currentImageWidth()/2)+1200), (ImagesLoading.currentImageWidth()/2)+900,
 						Assets.currentLetterSize.get(i), Assets.currentLetterSize.get(i), null);
 			} else if (Assets.sizeIncreaseArray.get(i) + Assets.currentLetterSize.get(i) < 6000) {
-				g.drawImage(currentMem, Assets.sizeIncreaseArray.get(i) - 5000, 1000,
+				g.drawImage(currentMem, Assets.sizeIncreaseArray.get(i) - ((ImagesLoading.currentImageWidth()/2)+1400), (ImagesLoading.currentImageWidth()/2)+1100,
 						Assets.currentLetterSize.get(i), Assets.currentLetterSize.get(i), null);
 			}
 		}

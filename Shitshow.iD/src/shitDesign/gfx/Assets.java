@@ -1,13 +1,15 @@
 package shitDesign.gfx;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.Scanner;
+
+import javax.imageio.ImageIO;
 
 import shitDesign.shitDesignGame;
-import shitDesign.gfx.randomization;
 
 public class Assets {
 	public static BufferedImage a1, a2, a3, a4, a5, a6, b1, b2, b3, b4, b5, b6, c1, c2, c3, c4, c5, c6, d1, d2, d3, d4,
@@ -30,7 +32,7 @@ public class Assets {
 //use it to create a for loop to put stuff in rather than writing it a million bajilion times	
 
 	public static void init() {
-
+		
 		SpriteSheet sheet = new SpriteSheet(ImageLoader.loadImage("/textures/sheet.png"));
 		sizeChange = new LinkedHashMap<String, ArrayList<BufferedImage>>();
 		randomizerSelection = new HashMap<ArrayList<BufferedImage>, Integer>();

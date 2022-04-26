@@ -15,7 +15,7 @@ import shitDesign.gfx.Assets;
 import shitDesign.gfx.ImagesLoading;
 
 public class shitGameDesignVisuals implements Runnable {
-
+//alot of declared variables here
 	private display display;
 	public String title;
 	public String p;
@@ -26,7 +26,6 @@ public class shitGameDesignVisuals implements Runnable {
 	private Thread thread;
 	private BufferStrategy bs;
 	private Graphics g;
-	private ImagesLoading a = new ImagesLoading();
 
 //object with parameters for our game window
 	public shitGameDesignVisuals(String title, int width, int height, String p) {
@@ -36,19 +35,20 @@ public class shitGameDesignVisuals implements Runnable {
 		this.p = p;
 	}
 
-//runs once to initialize everything
+//runs once to initialize everything. creates the canvas size and all of the assets as their own seperate objects
 	private void init() {
 		display = new display(title, width, height);
 		Assets.init();
 
 	}
-
+//for changing tick speed
 	private void tick() {
 
 	}
 
-//render the graphics
+//render the graphics every tick
 	private void render() {
+		//buffer strategy is so that we do not get frame issues with rendering as it renders 2 ticks ahead
 		bs = display.getCanvas().getBufferStrategy();
 		if (bs == null) {
 			display.getCanvas().createBufferStrategy(3);
@@ -57,13 +57,18 @@ public class shitGameDesignVisuals implements Runnable {
 		g = bs.getDrawGraphics();
 		// Clear Screen
 		g.clearRect(0, 0, width, height);
-		// DRAWING
+		// DRAWING SECTION
+		//takes image from ImagesLoading and puts it into graphics drawImage function. Check out ImagesLoading Class next.
 		g.drawImage(ImagesLoading.currentImageNameMethod(), ImagesLoading.imageStartingPoint()*2, 100, ImagesLoading.currentImageWidth()/2, ImagesLoading.currentImageHeight()/2, null);
+		//creates a for loop to go through array of letters
 		for (int i = 0; i < Assets.currentLetterSize.size(); i++) {
-	
+			//selects the character in the array at and uses a hashmap in Assets to change it into the corresponding letter
 			ArrayList<BufferedImage> currentList = Assets.sizeChange.get(String.valueOf(shitDesignGame.p.charAt(i)));
+			//takes the buffered image of the current letter
 			BufferedImage currentMem = currentList.get(Assets.currentLetterSelection.get(i));
+			//bunch of if statements to test if the letter can fit inside of the screen on the x axis or if it needs to make a new row
 			if (Assets.sizeIncreaseArray.get(i) + Assets.currentLetterSize.get(i) < 1000) {
+				//creates the image. the image starts at wherever the image before it ends
 				g.drawImage(currentMem, Assets.sizeIncreaseArray.get(i), (ImagesLoading.currentImageWidth()/2)+100, Assets.currentLetterSize.get(i),
 						Assets.currentLetterSize.get(i), null);
 			} else if (Assets.sizeIncreaseArray.get(i) + Assets.currentLetterSize.get(i) < 2000) {
@@ -132,8 +137,3 @@ public class shitGameDesignVisuals implements Runnable {
 	}
 
 }
-//* UPDATES 7 need to find a way to use events to create lines
-// when drawing, y axis is flipped so (0, 0) is at the top left and the y coords go down
-// synchronized is used specifically with threads to make sure everything works
-// correctly (look into how threads work)
-// get good at using awt graphics (its how everything is drawn)

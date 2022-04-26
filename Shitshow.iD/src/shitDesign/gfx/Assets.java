@@ -12,28 +12,38 @@ import javax.imageio.ImageIO;
 import shitDesign.shitDesignGame;
 
 public class Assets {
+	//stating all buffered images as their own objects here
 	public static BufferedImage a1, a2, a3, a4, a5, a6, b1, b2, b3, b4, b5, b6, c1, c2, c3, c4, c5, c6, d1, d2, d3, d4,
 			d5, d6, e1, e2, e3, e4, e5, e6, f1, f2, f3, f4, f5, f6, g1, g2, g3, g4, g5, g6, h1, h2, h3, h4, h5, h6, i1,
 			i2, i3, i4, i5, i6, j1, j2, j3, j4, j5, j6, k1, k2, k3, k4, k5, k6, l1, l2, l3, l4, l5, l6, m1, m2, m3, m4,
 			m5, m6, n1, n2, n3, n4, n5, n6, o1, o2, o3, o4, o5, o6, p1, p2, p3, p4, p5, p6, q1, q2, q3, q4, q5, q6, r1,
 			r2, r3, r4, r5, r6, s1, s2, s3, s4, s5, s6, t1, t2, t3, t4, t5, t6, u1, u2, u3, u4, u5, u6, v1, v2, v3, v4,
 			v5, v6, w1, w2, w3, w4, w5, w6, x1, x2, x3, x4, x5, x6, y1, y2, y3, y4, y5, y6, z1, z2, z3, z4, z5, z6;
+	//size for keeping x axis starting at 0
 	private static int sizeIncrease = 0;
+	//width and height of each letter
 	private final static int width = 100, height = 100;
-	public static LinkedHashMap<String, ArrayList<BufferedImage>> sizeChange;
+	//creates a buffered image list for each pair of letters
 	public static ArrayList<BufferedImage> alist, blist, clist, dlist, elist, flist, glist, hlist, ilist, jlist, klist, llist,
 			mlist, nlist, olist, plist, qlist, rlist, slist, tlist, ulist, vlist, wlist, xlist, ylist, zlist;
+	//maps the character to a buffered image arraylist
+	public static LinkedHashMap<String, ArrayList<BufferedImage>> sizeChange;
+	//maps that buffered image list to an integer
 	public static HashMap<ArrayList<BufferedImage>, Integer> randomizerSelection;
+	//maps that buffered image list to an integer
 	public static HashMap<ArrayList<BufferedImage>, Integer> randomizerSize;
+	//creates an arraylist for which letter we are currently on
 	public static ArrayList<Integer> currentLetterSelection = new ArrayList<Integer>();
+	//takes the random integer to map to buffered image above to change its size
 	public static ArrayList<Integer> currentLetterSize= new ArrayList<Integer>();
+	//additive number for how big the x axis is (used for debugging shit)
 	public static ArrayList<Integer> sizeIncreaseArray= new ArrayList<Integer>();
-//ITERATORS... USE EM PLEASE IT WILL MAKE THINGS A HUNDRED TIMES EASIER
-//use it to create a for loop to put stuff in rather than writing it a million bajilion times	
+//dont even bother trying to understand this...
 
 	public static void init() {
-		
+		//takes sprite sheet and loads it
 		SpriteSheet sheet = new SpriteSheet(ImageLoader.loadImage("/textures/sheet.png"));
+		//declaring hashmaps and arraylists
 		sizeChange = new LinkedHashMap<String, ArrayList<BufferedImage>>();
 		randomizerSelection = new HashMap<ArrayList<BufferedImage>, Integer>();
 		randomizerSize = new HashMap<ArrayList<BufferedImage>, Integer>();
@@ -63,6 +73,7 @@ public class Assets {
 		xlist = new ArrayList<BufferedImage>();
 		ylist = new ArrayList<BufferedImage>();
 		zlist = new ArrayList<BufferedImage>();
+		//puts letters and buffered image lists into hash map
 		sizeChange.put("a", alist);
 		sizeChange.put("b", blist);
 		sizeChange.put("c", clist);
@@ -89,7 +100,7 @@ public class Assets {
 		sizeChange.put("x", xlist);
 		sizeChange.put("y", ylist);
 		sizeChange.put("z", zlist);
-		
+		//creates each object then adds them to the array list for each
 		alist.add(a1 = sheet.crop(0, 0, width, height));
 		alist.add(a2 = sheet.crop((width) - 1, 0, width, height));
 		alist.add(a3 = sheet.crop((width * 2) - 1, 0, width, height));
@@ -246,19 +257,28 @@ public class Assets {
 		zlist.add(z4 = sheet.crop((width * 3) - 1, height * 25, width, height));
 		zlist.add(z5 = sheet.crop((width * 4) - 1, height * 25, width, height));
 		zlist.add(z6 = sheet.crop((width * 5) - 1, height * 25, width, height));
+		//meat and bones of this shit
+		//for loop to go through for the length of our array (any print statements here are for debugging)
 		for (int i=0; i < shitDesignGame.p.length(); i++) {
+			//takes it one letter at a time
 			String currentLetter = String.valueOf(shitDesignGame.p.charAt(i));
 			System.out.println(currentLetter + " currentLetter");
+			//takes a random number from randomization 
 			randomizerSelection.put(sizeChange.get(currentLetter), randomization.randomBufferedSelection());
+			//maps the current letter to that random selection
 			currentLetterSelection.add(randomizerSelection.get(sizeChange.get(currentLetter)));
+			//takes a random size from the letter selection
 			randomizerSize.put(sizeChange.get(currentLetter), randomization.randomSizeSelection());
+			//maps the random size to the current letter
 			currentLetterSize.add(randomizerSize.get(sizeChange.get(currentLetter)));
 			System.out.println(currentLetterSelection + " currentLetterSelection");
 			System.out.println(currentLetterSize + " currentLetterSize");
-			//sizeIncrease += Assets.currentLetterSize.get(i);
+			//adds the size increase of the current letter to the size increase array
 			sizeIncreaseArray.add(sizeIncrease);
+			//adds the new size to size increase
 			sizeIncrease += Assets.currentLetterSize.get(i);
 			System.out.println(sizeIncreaseArray + " sizeIncreaseArray");
+			//all this is used back in .visuals
 		}
 	}
 

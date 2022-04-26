@@ -12,7 +12,7 @@ import java.awt.Frame;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.InputMethodEvent;
-
+//creates the image on the canvas every time it is changed
 class imageLoad extends Canvas {
 	Image img;
 
@@ -30,8 +30,9 @@ class imageLoad extends Canvas {
 		this.img = img;
 	}
 }
-
+//actual meat and potatoes of image loading
 public class ImagesLoading implements ActionListener {
+	//creates all the variables that will be used in the prompt for uploading an image
 	public static String currentImageName;
 	String imageName;
 	static JFrame fr = new JFrame("Image loading program Using awt");
@@ -40,10 +41,10 @@ public class ImagesLoading implements ActionListener {
 	public Image Image1;
 	imageLoad Canvas1;
 	static FileDialog fd = new FileDialog(fr, "Open", FileDialog.LOAD);
-
+//creates the initial prompt window
 	public void initialize() {
-		fr.setSize(500, 500);
-		fr.setLocation(200, 200);
+		fr.setSize(1000, 1000);
+		fr.setLocation(500, 200);
 		fr.setBackground(Color.lightGray);
 		fr.setLayout(new FlowLayout());
 		fr.add(Label1);
@@ -55,6 +56,7 @@ public class ImagesLoading implements ActionListener {
 		fr.add(Canvas1);
 		fr.show();
 	}
+	//takes file from prompt and if it is able to read the file it returns the file
 	public static BufferedImage currentImageNameMethod(){
 		currentImageName = (fd.getDirectory() + fd.getFile());
 		try {
@@ -66,18 +68,22 @@ public class ImagesLoading implements ActionListener {
 		}
 		return null;
 	}
+	//image width for scaling in .visuals
 	public static int currentImageWidth() {
 		int imageWidth = currentImageNameMethod().getWidth();
 		return imageWidth;
 	}
+	//image starting point for scaling in .visuals
 	public static int imageStartingPoint() {
 		int startingPoint = (1000-(currentImageWidth()))/2;
 		return startingPoint;
 	}
+	//image height for scaling in .visuals
 	public static int currentImageHeight() {
 		int imageHeight = currentImageNameMethod().getHeight();
 		return imageHeight;
 	}
+	//actual method for the upload button
 	void imageload() {
 		fd.show();
 		if (fd.getFile() == null) {
@@ -91,7 +97,7 @@ public class ImagesLoading implements ActionListener {
 			Canvas1.repaint();
 		}
 	}
-
+	//event spam down here
 	public void windowClosing(WindowEvent e) {
 		System.exit(0);
 	}
@@ -117,6 +123,7 @@ public class ImagesLoading implements ActionListener {
 	public void actionPerformed(ActionEvent event) {
 		Button b = (Button) event.getSource();
 		if (b == Button1) {
+			//when the button is pressed the image is loaded onto the page and sent back to visuals (back to visuals we go!)
 			imageload();
 			currentImageNameMethod();
 		}

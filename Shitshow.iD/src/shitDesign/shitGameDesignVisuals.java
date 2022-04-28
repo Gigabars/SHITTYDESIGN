@@ -83,10 +83,20 @@ public class shitGameDesignVisuals implements Runnable {
 //1. update variables/positions/objects, 2. render everything, 3. repeat
 	public void run() {
 		init();
-
+		int fps = 5;
+		double timePerTick = 1000000000 / fps;
+		double delta = 0;
+		long now;
+		long lastTime = System.nanoTime();
 		while (running) {
-			tick();
-			render();
+			now = System.nanoTime();
+			delta += (now - lastTime) / timePerTick;
+			lastTime = now;
+			if (delta >= 1) {
+				tick();
+				render();
+				delta--;
+			}
 		}
 		stop();
 	}
